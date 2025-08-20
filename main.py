@@ -9,6 +9,10 @@ def speak(text):
     engine.say(text)
     engine.runAndWait()
 
+def processcommand(c):
+    pass
+
+
 if __name__ == "__main__":
     speak("Intializing Voice Assistant")
     r = sr.Recognizer()
@@ -17,9 +21,20 @@ if __name__ == "__main__":
         try:
             with sr.Microphone() as source:
                 print("Listening!")
-                audio = recognizer.listen(source, timeout= 2) # Use the correct object here
-                command = recognizer.recognize_google(audio) # And here
-                print(command)
+                audio = recognizer.listen(source, timeout= 2, phrase_time_limit=1) # Use the correct object here
+                word = recognizer.recognize_google(audio) # And here
+                if(word.lower() == "Wake up"):
+                    speak("Yes")
+                #Listen for command
+                with sr.Microphone() as source:
+                    print("Listening")
+                    audio = recognizer.listen(source)
+                    command = recognizer.recognize_google(audio)
+
+                    processcommand()
+
+
+
         except sr.UnknownValueError:
             print("Could not understand audio")
         except sr.RequestError as e:
