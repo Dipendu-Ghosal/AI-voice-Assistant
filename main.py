@@ -1,6 +1,7 @@
 import speech_recognition as sr
 import webbrowser
 import pyttsx3
+import music_lib
 
 # Initialize
 recognizer = sr.Recognizer()
@@ -18,6 +19,10 @@ def processcommand(c):
     elif "google" in c.lower():
         speak("Opening Google")
         webbrowser.open("https://www.google.com")
+    elif c.lower().startswith("play"):
+        song = c.lower().split(" ")[1]
+        link = music_lib.music[song]
+        webbrowser.open(link)
     else:
         speak("Sorry, I can't do that yet.")
 
