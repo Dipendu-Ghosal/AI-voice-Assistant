@@ -2,6 +2,7 @@ import speech_recognition as sr
 import webbrowser
 import pyttsx3
 
+# Initialize
 recognizer = sr.Recognizer()
 engine = pyttsx3.init()
 
@@ -9,35 +10,26 @@ def speak(text):
     engine.say(text)
     engine.runAndWait()
 
-def processcommand(c):
-    pass
-
+def processCommand(c):
+    print(c)
 
 if __name__ == "__main__":
-    speak("Intializing Voice Assistant")
-    r = sr.Recognizer()
+    speak("Initializing Voice Assistant")
 
     while True:
         try:
             with sr.Microphone() as source:
-                print("Listening!")
-                audio = recognizer.listen(source, timeout= 2, phrase_time_limit=1) # Use the correct object here
-                word = recognizer.recognize_google(audio) # And here
-                if(word.lower() == "Wake up"):
-                    speak("Yes")
-                #Listen for command
+                print("Listening for wake word...")
+                audio = recognizer.listen(source)
+
+            word = recognizer.recognize_google(audio).lower()
+
+            if word == "hello":   # wake word
+                speak("Yes, I am listening")
                 with sr.Microphone() as source:
-                    print("Listening")
+                    print("Assistant Listening...")
                     audio = recognizer.listen(source)
                     command = recognizer.recognize_google(audio)
-
-                    processcommand()
-
-
-
-        except sr.UnknownValueError:
-            print("Could not understand audio")
-        except sr.RequestError as e:
-            print(f"Could not request results from Google Speech Recognition service; {e}")
+                    processCommand(command)
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
