@@ -2,17 +2,18 @@ import speech_recognition as sr
 import webbrowser
 import pyttsx3
 import music_lib
+import requests
 
 # Initialize
 recognizer = sr.Recognizer()
 engine = pyttsx3.init()
-
+key = "a972a676069340cebd48895a7aa1b4df"
 def speak(text):
     engine.say(text)
     engine.runAndWait()
 
 def processcommand(c):
-    c = c.lower()
+    
     if "youtube" in c.lower():
         speak("Opening YouTube")
         webbrowser.open("https://www.youtube.com")
@@ -23,6 +24,18 @@ def processcommand(c):
         song = c.lower().split(" ")[1]
         link = music_lib.music[song]
         webbrowser.open(link)
+    elif "news" in c.lower():
+        r = requests.get(f"https://newsapi.org/v2/top-headlines?country=us&apiKey={key}")
+        if r.status_code == 200:
+            # Parse the JSON response
+            data = r.json()
+            
+            # Extract the articles
+            articles = data.get('articles', [])
+            
+            # Print the headlines
+            for article in articles:
+                speak(article['title'])
     else:
         speak("Sorry, I can't do that yet.")
 
