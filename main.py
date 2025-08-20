@@ -12,17 +12,17 @@ def speak(text):
 if __name__ == "__main__":
     speak("Intializing Voice Assistant")
     r = sr.Recognizer()
+
     while True:
-        # Listen for Calling 
-        #obtain audio from mic
         try:
             with sr.Microphone() as source:
                 print("Listening!")
-            audio = r.listen(source)
-
-            command = r.recognize_google(audio)
-            print(command)
+                audio = recognizer.listen(source, timeout= 2) # Use the correct object here
+                command = recognizer.recognize_google(audio) # And here
+                print(command)
         except sr.UnknownValueError:
-            print("Sphinx could not understand audio")
+            print("Could not understand audio")
         except sr.RequestError as e:
-            print("Sphinx error; {0}".format(e))
+            print(f"Could not request results from Google Speech Recognition service; {e}")
+        except Exception as e:
+            print(f"An unexpected error occurred: {e}")
