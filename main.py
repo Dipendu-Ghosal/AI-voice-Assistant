@@ -10,8 +10,16 @@ def speak(text):
     engine.say(text)
     engine.runAndWait()
 
-def processCommand(c):
-    print(c)
+def processcommand(c):
+    c = c.lower()
+    if "youtube" in c.lower():
+        speak("Opening YouTube")
+        webbrowser.open("https://www.youtube.com")
+    elif "google" in c.lower():
+        speak("Opening Google")
+        webbrowser.open("https://www.google.com")
+    else:
+        speak("Sorry, I can't do that yet.")
 
 if __name__ == "__main__":
     speak("Initializing Voice Assistant")
@@ -30,6 +38,6 @@ if __name__ == "__main__":
                     print("Assistant Listening...")
                     audio = recognizer.listen(source)
                     command = recognizer.recognize_google(audio)
-                    processCommand(command)
+                    processcommand(command)
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
