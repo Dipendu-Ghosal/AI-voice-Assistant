@@ -7,7 +7,7 @@ import requests
 # Initialize
 recognizer = sr.Recognizer()
 engine = pyttsx3.init()
-key = "a972a676069340cebd48895a7aa1b4df"
+key = "--"
 def speak(text):
     engine.say(text)
     engine.runAndWait()
