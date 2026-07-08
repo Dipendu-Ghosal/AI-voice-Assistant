@@ -1,3 +1,3 @@
 # AI voice Assistant
 
-This works like alexa 
+This thing works like alexa 
